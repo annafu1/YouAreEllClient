@@ -17,29 +17,36 @@ public class Message implements Comparable {
 
     private String message = "";
     private String toId = "";
-    private String fromId = "";
+    private String fromid = "";
     private String timestamp = "";
-    private String seqId = "";
+    private String sequence = "";
+
+    public Message() {
+
+    }
 
     public Message (String message, String fromId, String toId) {
         this.message = message;
-        this.fromId = fromId;
+        this.fromid = fromid;
         this.toId = toId;
+        this.timestamp = "-";
     }
 
     public Message (String message, String fromId) {
         this.message = message;
-        this.fromId = fromId;
+        this.fromid = fromid;
         this.toId = "";
+        this.sequence = "-";
+        this.timestamp = "-";
     }
 
     @Override
     public String toString() {
-        return "to: " + this.toId + "\nfrom: "+ this.fromId + "\n" + this.message + "\n----\n";
+        return "to: " + this.toId + "\nfrom: "+ this.fromid + "\n" + this.message + "\n----\n";
     }
 
     public int compareTo(Object o) {
-        return this.seqId.compareTo(((Message) o).getSeqId());
+        return this.sequence.compareTo(((Message) o).getSequence());
     }
 
     public String getMessage() {
@@ -58,19 +65,23 @@ public class Message implements Comparable {
         this.toId = toId;
     }
 
-    public String getFromId() {
-        return fromId;
+    public String getFromid() {
+        return fromid;
     }
 
-    public void setFromId(String fromId) {
-        this.fromId = fromId;
+    public void setFromId(String fromid) {
+        this.fromid = fromid;
     }
 
     public String getTimestamp() {
         return timestamp;
     }
 
-    public String getSeqId() {
-        return seqId;
+    public String getSequence() {
+        return sequence;
+    }
+
+    public void setSequence(String sequence) {
+        this.sequence = sequence;
     }
 }

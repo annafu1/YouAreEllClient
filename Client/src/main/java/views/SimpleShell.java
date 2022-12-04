@@ -1,15 +1,16 @@
 package views;
 
+import controllers.IdController;
+import controllers.MessageController;
+import controllers.TransactionController;
+import youareell.YouAreEll;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-
-import controllers.IdController;
-import controllers.MessageController;
-import youareell.YouAreEll;
 
 // Simple Shell is a Console view for youareell.YouAreEll.
 public class SimpleShell {
@@ -21,7 +22,7 @@ public class SimpleShell {
     }
     public static void main(String[] args) throws java.io.IOException {
 
-        YouAreEll urll = new YouAreEll(new MessageController(), new IdController());
+        YouAreEll urll = new YouAreEll(new TransactionController(new MessageController(), new IdController()));
         
         String commandLine;
         BufferedReader console = new BufferedReader
@@ -67,19 +68,28 @@ public class SimpleShell {
                 // Specific Commands.
 
                 // ids
-                if (list.contains("ids")) {
-                    String results = webber.get_ids();
+                if (list.contains("ids") && list.size() == 1) {
+                    String results = urll.get_ids();
                     SimpleShell.prettyPrint(results);
                     continue;
                 }
 
                 // messages
-                if (list.contains("messages")) {
-                    String results = webber.get_messages();
+                if (list.contains("messages") && list.size() == 1) {
+                    String results = urll.get_messages();
                     SimpleShell.prettyPrint(results);
                     continue;
                 }
                 // you need to add a bunch more.
+                if (list.contains("postid")) {
+                    System.out.println("IdtoRegister? ");
+                    String name = console.readLine();
+                    System.out.println("GithubId? ");
+                    String github = console.readLine();
+                    String results = urll.addUser(name,github);
+                    SimpleShell.prettyPrint(results);
+                    continue;
+                }
 
                 //!! command returns the last command in history
                 if (list.get(list.size() - 1).equals("!!")) {
@@ -94,21 +104,19 @@ public class SimpleShell {
                     pb.command(list);
                 }
 
-                // // wait, wait, what curiousness is this?
-                // Process process = pb.start();
+                 // wait, wait, what curiousness is this?
+                 Process process = pb.start();
 
-                // //obtain the input stream
-                // InputStream is = process.getInputStream();
-                // InputStreamReader isr = new InputStreamReader(is);
-                // BufferedReader br = new BufferedReader(isr);
+                 //obtain the input stream
+                 InputStream is = process.getInputStream();
+                 InputStreamReader isr = new InputStreamReader(is);
+                 BufferedReader br = new BufferedReader(isr);
 
-                // //read output of the process
-                // String line;
-                // while ((line = br.readLine()) != null)
-                //     System.out.println(line);
-                // br.close();
-
-
+                 //read output of the process
+                 String line;
+                 while ((line = br.readLine()) != null)
+                     System.out.println(line);
+                 br.close();
             }
 
             //catch ioexception, output appropriate message, resume waiting for input
@@ -125,8 +133,6 @@ public class SimpleShell {
              */
 
         }
-
-
     }
 
 }
