@@ -82,9 +82,9 @@ public class SimpleShell {
                 }
                 // you need to add a bunch more.
                 if (list.contains("postid")) {
-                    System.out.println("IdtoRegister? ");
+                    System.out.println("IdRegister ");
                     String name = console.readLine();
-                    System.out.println("GithubId? ");
+                    System.out.println("GithubId ");
                     String github = console.readLine();
                     String results = urll.addUser(name,github);
                     SimpleShell.prettyPrint(results);
