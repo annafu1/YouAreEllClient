@@ -28,6 +28,7 @@ public class IdController {
     public ArrayList<Id> getIds() {
         try {
             myUrl = new URL(idUrl);
+            System.out.println(myUrl);
             return objectMapper.readValue(myUrl, new TypeReference<ArrayList<Id>>(){});
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
@@ -45,17 +46,21 @@ public class IdController {
         // call server, get json result Or error
         // result json to Id obj
         ObjectMapper mapper = new ObjectMapper();
-        Id createdID;
+        Id createId;
         try {
             String jsonID = mapper.writeValueAsString(id);
-            HttpRequest request = HttpRequest.newBuilder().uri(URI.create(idUrl))
+            //System.out.println(jsonID);
+            HttpRequest postrequest = HttpRequest.newBuilder().uri(URI.create(idUrl))
                     .POST(HttpRequest.BodyPublishers.ofString(jsonID)).build();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            if (response.statusCode() < 200) {
-                createdID = objectMapper.readValue(response.body(), Id.class);
-                myId=createdID;
+            HttpResponse<String> response = client.send(postrequest, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 200) {
+                createId = objectMapper.readValue(response.body(), Id.class);
+                myId = createId;
+                System.out.println(myId);
             }
             return myId;
+
+
         } catch (JsonMappingException e) {
             throw new RuntimeException(e);
         } catch (JsonProcessingException e) {

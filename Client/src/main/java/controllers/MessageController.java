@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.exc.StreamReadException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import models.Id;
 import models.Message;
 
 import java.io.IOException;
@@ -22,7 +21,9 @@ public class MessageController {
     public ArrayList<Message> getMessages() {
         try {
             URL myUrl = new URL(messageUrl);
-            return objectMapper.readValue(myUrl, new TypeReference<ArrayList<Message>>(){});
+            System.out.println(myUrl);
+            return objectMapper.readValue(myUrl, new TypeReference<>() {
+            });
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         } catch (StreamReadException e) {
@@ -34,18 +35,18 @@ public class MessageController {
         }
     }
 
-    public ArrayList<Message> getMessagesForId(Id Id) {
-        return null;
-    }
-    public Message getMessageForSequence(String seq) {
-        return null;
-    }
-    public ArrayList<Message> getMessagesFromFriend(Id myId, Id friendId) {
-        return null;
-    }
-
-    public Message postMessage(Id myId, Id toId, Message msg) {
-        return null;
-    }
+//    public ArrayList<Message> getMessagesForId(Id Id) {
+//        return null;
+//    }
+//    public Message getMessageForSequence(String seq) {
+//        return null;
+//    }
+//    public ArrayList<Message> getMessagesFromFriend(Id myId, Id friendId) {
+//        return null;
+//    }
+//
+//    public Message postMessage(Id myId, Id toId, Message msg) {
+//        return null;
+//    }
  
 }

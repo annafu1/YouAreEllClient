@@ -4,19 +4,27 @@ package models;
  * POJO for an Id object
  */
 public class Id {
-    private String uid = "";
+
+    public Id() {
+
+    }
+    private String userid = "";
     private String name = "";
     private String github = "";
 
-    public Id (String name, String githubId) {}
-
-    public String getUid() {
-        return uid;
+    public Id (String name, String githubId) {
+        this.name = name;
+        this.github = githubId;
+        this.userid = "";
     }
 
-//    public void setUid(String uid) {
-//        this.uid = uid;
-//    }
+    public String getUserid() {
+        return userid;
+    }
+
+    public void setUserid(String userid) {
+        this.userid = userid;
+    }
 
     public String getName() {
         return name;
@@ -36,6 +44,6 @@ public class Id {
 
     @Override
     public String toString() {
-        return this.name + " (" + this.github + ") ";
+        return this.name + " (" + this.github + ")\n";
     }
 }
